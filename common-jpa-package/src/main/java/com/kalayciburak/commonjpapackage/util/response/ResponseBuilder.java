@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Set;
 
-import static com.kalayciburak.commonjpapackage.util.constant.Keywords.createdKeywords;
+import static com.kalayciburak.commonjpapackage.util.constant.Keywords.creationKeywords;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 public class ResponseBuilder {
@@ -29,7 +29,7 @@ public class ResponseBuilder {
     }
 
     private static String determineSuccessStatusCode(String message) {
-        for (String keyword : createdKeywords) {
+        for (String keyword : creationKeywords) {
             if (message.toLowerCase().contains(keyword)) {
                 return HttpStatus.CREATED.toString();
             }
