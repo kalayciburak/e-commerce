@@ -29,13 +29,11 @@ public class ResponseBuilder {
     }
 
     private static String determineSuccessStatusCode(String message) {
-        for (String keyword : creationKeywords) {
-            if (message.toLowerCase().contains(keyword)) {
-                return HttpStatus.CREATED.toString();
-            }
-        }
-
-        return HttpStatus.OK.toString();
+        return creationKeywords.stream()
+                .map(String::toLowerCase)
+                .anyMatch(message.toLowerCase()::contains)
+                ? HttpStatus.CREATED.toString()
+                : HttpStatus.OK.toString();
     }
 
     private static int getSize(Object data) {
