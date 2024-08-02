@@ -1,0 +1,15 @@
+version: '3'
+services:
+  inventorydb:
+    image: mysql
+    container_name: inventory_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3301:3306"
+    volumes:
+      - inventorydb:/data/db
+
+volumes:
+  inventorydb:
+    driver: local
