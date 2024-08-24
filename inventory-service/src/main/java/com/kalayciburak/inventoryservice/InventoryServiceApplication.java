@@ -1,9 +1,10 @@
 package com.kalayciburak.inventoryservice;
 
+import com.kalayciburak.commonjpapackage.util.constant.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.kalayciburak")
+@SpringBootApplication(scanBasePackages = Paths.ConfigurationBasePackage)
 public class InventoryServiceApplication {
 
     public static void main(String[] args) {
