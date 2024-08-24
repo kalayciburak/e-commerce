@@ -1,10 +1,7 @@
 package com.kalayciburak.inventoryservice.model.entitiy;
 
 import com.kalayciburak.commonjpapackage.model.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "categories")
 @SQLRestriction("is_active=true")
 public class Category extends BaseEntity {
     @Column(name = "name")

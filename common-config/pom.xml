@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.3.3</version>
         <relativePath/>
     </parent>
     <groupId>com.kalayciburak</groupId>
@@ -17,8 +17,8 @@
     <properties>
         <java.version>21</java.version>
         <lombok.version>1.18.34</lombok.version>
+        <springdoc.version>2.6.0</springdoc.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <springdoc-webmvc-ui.version>2.6.0</springdoc-webmvc-ui.version>
     </properties>
     <dependencies>
         <dependency>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc-webmvc-ui.version}</version>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

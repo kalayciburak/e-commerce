@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@Table(name = "products")
 @SQLRestriction("is_active=true")
 public class Product extends BaseEntity {
     @Column(name = "name")

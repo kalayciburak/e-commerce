@@ -25,5 +25,7 @@ public class Types {
         public static final String JSON_PROCESSING = "ERROR: JSON_PROCESSING_EXCEPTION";
         public static final String KEYCLOAK = "ERROR: KEYCLOAK_EXCEPTION";
         public static final String ILLEGAL_ARGUMENT = "ERROR: ILLEGAL_ARGUMENT_EXCEPTION";
+        public static final String ENTITY_NOT_FOUND = "ERROR: ENTITY_NOT_FOUND_EXCEPTION";
+        public static final String ENTITY_EXISTS = "ERROR: ENTITY_EXISTS_EXCEPTION";
     }
 }
