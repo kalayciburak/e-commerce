@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.util.mapper;
 
-import com.kalayciburak.commonjpapackage.util.mapper.BaseMapper;
+import com.kalayciburak.commonpackage.util.mapper.BaseMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.CategoryResponse;
 import com.kalayciburak.inventoryservice.model.dto.response.composite.CategoryWithProductsResponse;

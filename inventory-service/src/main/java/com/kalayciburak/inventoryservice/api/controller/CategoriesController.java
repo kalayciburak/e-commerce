@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.api.controller;
 
-import com.kalayciburak.commonjpapackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.service.CategoryService;
 import jakarta.validation.Valid;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/categories")
+@RequestMapping(value = "/categories", produces = "application/json")
 public class CategoriesController {
     private final CategoryService service;
 

@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.api.controller;
 
-import com.kalayciburak.commonjpapackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.service.ProductService;
 import jakarta.validation.Valid;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping(value = "/products", produces = "application/json")
 public class ProductsController {
     private final ProductService service;
 

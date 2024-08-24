@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: filter-service
+  data:
+    mongodb:
+      uri: mongodb://tbyte:010101@127.0.0.1:27017/filterdb?authSource=admin
+
+server:
+  servlet:
+    context-path: /api
+  port: 8082
+
+graylog:
+  host: 127.0.0.1
+  port: 12201

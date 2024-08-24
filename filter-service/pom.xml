@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kalayciburak</groupId>
+        <artifactId>common-config</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+    <artifactId>filter-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>filter-service</name>
+    <description>filter-service</description>
+    <properties>
+        <common-package.version>0.0.1-SNAPSHOT</common-package.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kalayciburak</groupId>
+            <artifactId>common-package</artifactId>
+            <version>${common-package.version}</version>
+        </dependency>
+    </dependencies>
+</project>

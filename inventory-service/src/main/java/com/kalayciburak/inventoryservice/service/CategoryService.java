@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
-import com.kalayciburak.commonjpapackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.model.entitiy.Category;
 import com.kalayciburak.inventoryservice.repository.CategoryRepository;
@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonjpapackage.util.constant.Messages.Inventory.Category.*;
-import static com.kalayciburak.commonjpapackage.util.response.ResponseBuilder.createNotFoundResponse;
-import static com.kalayciburak.commonjpapackage.util.response.ResponseBuilder.createSuccessResponse;
+import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Category.*;
+import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
+import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
 
 @Service
 @Transactional
