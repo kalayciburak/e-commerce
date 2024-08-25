@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper extends BaseMapper<CategoryResponse, Category> {
-    @Mapping(source = "parent", target = "parentCategory")
     CategoryResponse toResponse(Category category);
 
     Category toEntity(CategoryResponse response);

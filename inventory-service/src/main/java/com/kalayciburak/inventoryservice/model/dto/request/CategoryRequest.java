@@ -10,5 +10,6 @@ public record CategoryRequest(
 
         @Size(max = 500, message = "Açıklama en fazla 500 karakter olabilir")
         String description,
-        Long parentId) {
+        Long parentId
+) {
 }

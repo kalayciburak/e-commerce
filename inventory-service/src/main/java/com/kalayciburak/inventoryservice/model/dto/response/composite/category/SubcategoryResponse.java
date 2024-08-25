@@ -4,5 +4,6 @@ public record SubcategoryResponse(
         Long subcategoryId,
         String subcategoryName,
         int subcategoryCount,
-        int productCount) {
+        int productCount
+) {
 }

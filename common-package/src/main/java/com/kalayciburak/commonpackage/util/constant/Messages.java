@@ -36,6 +36,33 @@ public class Messages {
             public static final String DELETED = "Ürün silindi.";
         }
 
+        public static class Attribute {
+            public static final String NOT_FOUND = "Herhangi bir özellik bulunamadı.";
+            public static final String FOUND = "Özellik bulundu.";
+            public static final String LISTED = "Özellikler listelendi.";
+            public static final String SAVED = "Özellik oluşturuldu.";
+            public static final String UPDATED = "Özellik güncellendi.";
+            public static final String DELETED = "Özellik silindi.";
+        }
+
+        public static class Image {
+            public static final String NOT_FOUND = "Herhangi bir resim bulunamadı.";
+            public static final String FOUND = "Resim bulundu.";
+            public static final String LISTED = "Resimler listelendi.";
+            public static final String SAVED = "Resim oluşturuldu.";
+            public static final String UPDATED = "Resim güncellendi.";
+            public static final String DELETED = "Resim silindi.";
+        }
+
+        public static class Review {
+            public static final String NOT_FOUND = "Herhangi bir yorum bulunamadı.";
+            public static final String FOUND = "Yorum bulundu.";
+            public static final String LISTED = "Yorumlar listelendi.";
+            public static final String SAVED = "Yorum oluşturuldu.";
+            public static final String UPDATED = "Yorum güncellendi.";
+            public static final String DELETED = "Yorum silindi.";
+        }
+
         public static class Category {
             public static final String NOT_FOUND = "Herhangi bir kategori bulunamadı.";
             public static final String FOUND = "Kategori bulundu.";

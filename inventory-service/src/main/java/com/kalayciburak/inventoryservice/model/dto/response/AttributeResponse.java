@@ -1,9 +1,9 @@
 package com.kalayciburak.inventoryservice.model.dto.response;
 
-public record CategoryResponse(
+public record AttributeResponse(
         Long id,
+        Long productId,
         String name,
-        String description,
-        CategoryResponse parent
+        String value
 ) {
 }

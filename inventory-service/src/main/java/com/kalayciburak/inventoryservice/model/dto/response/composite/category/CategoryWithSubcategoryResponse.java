@@ -8,7 +8,8 @@ public record CategoryWithSubcategoryResponse(
         Long id,
         String name,
         int subcategoryCount,
-        List<SubcategoryResponse> subcategories) implements Sizeable {
+        List<SubcategoryResponse> subcategories
+) implements Sizeable {
     @Override
     public int size() {
         return subcategories.size();

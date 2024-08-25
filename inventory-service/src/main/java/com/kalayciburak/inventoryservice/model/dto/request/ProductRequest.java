@@ -1,7 +1,6 @@
 package com.kalayciburak.inventoryservice.model.dto.request;
 
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.URL;
 
 import java.math.BigDecimal;
 
@@ -22,9 +21,6 @@ public record ProductRequest(
 
         @NotNull(message = "Stok boş olamaz")
         @Min(value = 0, message = "Stok negatif bir değer olamaz")
-        Integer stock,
-
-        @NotBlank(message = "Resim URL'i boş olamaz")
-        @URL(message = "Geçerli bir URL olmalıdır")
-        String imageUrl) {
+        Integer stock
+) {
 }
