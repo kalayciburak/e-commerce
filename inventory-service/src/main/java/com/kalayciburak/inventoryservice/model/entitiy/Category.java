@@ -21,6 +21,13 @@ public class Category extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private Set<Category> subcategories = new HashSet<>();
 }

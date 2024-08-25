@@ -28,9 +28,14 @@ public class CategoriesController {
         return service.getByName(name);
     }
 
-    @GetMapping("/{id}/products")
-    public BaseResponse getByIdWithProducts(@PathVariable Long id) {
-        return service.getByIdWithProducts(id);
+    @GetMapping("/{id}/details")
+    public BaseResponse getCategoryDetails(@PathVariable Long id) {
+        return service.getCategoryWithSubcategoryInfo(id);
+    }
+
+    @GetMapping("/all-parents/details")
+    public BaseResponse getAllParentCategories() {
+        return service.getAllParentCategoriesWithSubcategoryInfo();
     }
 
     @PostMapping

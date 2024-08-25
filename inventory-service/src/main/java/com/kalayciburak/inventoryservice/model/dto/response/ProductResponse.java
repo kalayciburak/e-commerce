@@ -4,11 +4,10 @@ import java.math.BigDecimal;
 
 public record ProductResponse(
         Long id,
-        Long categoryId,
         String name,
         String description,
         BigDecimal price,
         Integer stock,
-        String imageUrl,
-        String categoryName) {
+        // TODO: Image, Review, Attribute response eklemeleri yapılacak
+        CategoryResponse category) {
 }

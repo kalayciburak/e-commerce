@@ -1,9 +1,11 @@
 package com.kalayciburak.commonpackage.util.response;
 
+import com.kalayciburak.commonpackage.model.Sizeable;
 import com.kalayciburak.commonpackage.model.success.BaseSuccess;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -38,9 +40,12 @@ public class ResponseBuilder {
 
     private static int getSize(Object data) {
         return switch (data) {
-            case List<?> objects -> objects.size();
-            case Page<?> objects -> objects.getSize();
-            case Set<?> objects -> objects.size();
+            case List<?> list -> list.size();
+            case Page<?> page -> page.getSize();
+            case Set<?> set -> set.size();
+            case Collection<?> collection -> collection.size();
+            case Object[] array -> array.length;
+            case Sizeable sizeable -> sizeable.size();
             case null, default -> 1;
         };
     }

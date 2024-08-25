@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,10 +27,16 @@ public class Product extends BaseEntity {
     @Column(name = "stock")
     private int stock;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Image> images;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Attribute> attributes;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 }

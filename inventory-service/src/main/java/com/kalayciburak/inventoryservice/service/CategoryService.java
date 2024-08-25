@@ -2,7 +2,9 @@ package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
+import com.kalayciburak.inventoryservice.model.dto.response.composite.category.AllParentCategoriesResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Category;
+import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.CategoryRepository;
 import com.kalayciburak.inventoryservice.util.mapper.CategoryMapper;
 import jakarta.persistence.EntityExistsException;
@@ -10,6 +12,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Category.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
@@ -49,18 +53,26 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getByIdWithProducts(Long id) {
+    public BaseResponse getCategoryWithSubcategoryInfo(Long id) {
         var category = findCategoryByIdOrThrow(id);
-        boolean hasNoProducts = category.getProducts().isEmpty();
-        if (hasNoProducts) return createNotFoundResponse(NOT_FOUND_WITH_PRODUCTS);
-        var response = mapper.toResponseWithProducts(category);
+        var response = mapper.toCategoryWithSubcategoryResponse(category);
 
-        return createSuccessResponse(response, LISTED_WITH_PRODUCTS);
+        return createSuccessResponse(response, SUBCATEGORY_INFO);
+    }
+
+    @Transactional(readOnly = true)
+    public BaseResponse getAllParentCategoriesWithSubcategoryInfo() {
+        var parentCategories = repository.findAllByParentIsNull();
+        var categoryResponses = mapper.toCategoryWithSubcategoryResponseList(parentCategories);
+        var response = new AllParentCategoriesResponse(categoryResponses);
+
+        return createSuccessResponse(response, PARENT_CATEGORIES_INFO);
     }
 
     public BaseResponse save(CategoryRequest request) {
         checkCategoryUniqueness(request.name());
         var category = mapper.toEntity(request);
+        if (request.parentId() != null) category.setParent(findCategoryByIdOrThrow(request.parentId()));
         var savedCategory = repository.save(category);
         var response = mapper.toResponse(savedCategory);
 
@@ -69,6 +81,7 @@ public class CategoryService {
 
     public BaseResponse update(Long id, CategoryRequest request) {
         var category = findCategoryByIdOrThrow(id);
+        updateParentCategory(request, category);
         mapper.updateEntity(request, category);
         var updatedCategory = repository.save(category);
         var response = mapper.toResponse(updatedCategory);
@@ -81,8 +94,31 @@ public class CategoryService {
         repository.softDeleteById(id);
     }
 
+    /**
+     * <b>Kategorinin üst kategorisini günceller.</b>
+     * <p>
+     * Eğer {@code request.parentId} null ise, kategorinin üst kategorisi null olarak ayarlanır.
+     * Değilse, belirtilen üst kategori ID'sine sahip kategoriyi bulur ve onu üst kategori olarak ayarlar.
+     *
+     * @param request  Yeni kategori bilgileri.
+     * @param category Güncellenecek kategori.
+     */
+    private void updateParentCategory(CategoryRequest request, Category category) {
+        if (request.parentId() == null) category.setParent(null);
+        else category.setParent(findCategoryByIdOrThrow(request.parentId()));
+    }
+
     private void checkCategoryUniqueness(String name) {
         if (repository.existsByName(name)) throw new EntityExistsException(EXISTS);
+    }
+
+    private void collectProductsFromSubcategories(Category category, Set<Product> allProducts) {
+        if (category.getSubcategories() != null) {
+            for (Category subCategory : category.getSubcategories()) {
+                allProducts.addAll(subCategory.getProducts());
+                collectProductsFromSubcategories(subCategory, allProducts);
+            }
+        }
     }
 
     protected Category findCategoryByIdOrThrow(Long id) {

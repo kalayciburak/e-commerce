@@ -43,8 +43,8 @@ public class Messages {
             public static final String SAVED = "Kategori oluşturuldu.";
             public static final String UPDATED = "Kategori güncellendi.";
             public static final String DELETED = "Kategori silindi.";
-            public static final String LISTED_WITH_PRODUCTS = "Kategoriye ait ürünler listelendi.";
-            public static final String NOT_FOUND_WITH_PRODUCTS = "Kategoriye ait ürün bulunamadı.";
+            public static final String SUBCATEGORY_INFO = "Kategori ve alt kategori bilgileri getirildi.";
+            public static final String PARENT_CATEGORIES_INFO = "Ana kategoriler ve alt kategori bilgileri getirildi.";
             public static final String EXISTS = "Kategori zaten mevcut.";
         }
     }
