@@ -20,6 +20,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 public class ReviewService {
     private final ReviewMapper mapper;
     private final ReviewRepository repository;
+    private final ProductService productService;
 
     @Transactional(readOnly = true)
     public BaseResponse getAll() {
@@ -40,6 +41,7 @@ public class ReviewService {
 
     public BaseResponse save(ReviewRequest request) {
         var review = mapper.toEntity(request);
+        assignProductToReview(request, review);
         var savedReview = repository.save(review);
         var response = mapper.toResponse(savedReview);
 
@@ -48,6 +50,7 @@ public class ReviewService {
 
     public BaseResponse update(Long id, ReviewRequest request) {
         var review = findReviewByIdOrThrow(id);
+        assignProductToReview(request, review);
         mapper.updateEntity(request, review);
         var updatedReview = repository.save(review);
         var response = mapper.toResponse(updatedReview);
@@ -58,6 +61,11 @@ public class ReviewService {
     public void delete(Long id) {
         findReviewByIdOrThrow(id);
         repository.softDeleteById(id);
+    }
+
+    private void assignProductToReview(ReviewRequest request, Review review) {
+        var product = productService.findProductByIdOrThrow(request.productId());
+        review.setProduct(product);
     }
 
     private Review findReviewByIdOrThrow(Long id) {

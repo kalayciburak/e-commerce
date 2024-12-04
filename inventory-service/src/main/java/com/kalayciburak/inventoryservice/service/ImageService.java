@@ -20,6 +20,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 public class ImageService {
     private final ImageMapper mapper;
     private final ImageRepository repository;
+    private final ProductService productService;
 
     @Transactional(readOnly = true)
     public BaseResponse getAll() {
@@ -40,6 +41,7 @@ public class ImageService {
 
     public BaseResponse save(ImageRequest request) {
         var image = mapper.toEntity(request);
+        assignProductToImage(request, image);
         var savedImage = repository.save(image);
         var response = mapper.toResponse(savedImage);
 
@@ -48,6 +50,7 @@ public class ImageService {
 
     public BaseResponse update(Long id, ImageRequest request) {
         var image = findImageByIdOrThrow(id);
+        assignProductToImage(request, image);
         mapper.updateEntity(request, image);
         var updatedImage = repository.save(image);
         var response = mapper.toResponse(updatedImage);
@@ -58,6 +61,11 @@ public class ImageService {
     public void delete(Long id) {
         findImageByIdOrThrow(id);
         repository.softDeleteById(id);
+    }
+
+    private void assignProductToImage(ImageRequest request, Image image) {
+        var product = productService.findProductByIdOrThrow(request.productId());
+        image.setProduct(product);
     }
 
     private Image findImageByIdOrThrow(Long id) {

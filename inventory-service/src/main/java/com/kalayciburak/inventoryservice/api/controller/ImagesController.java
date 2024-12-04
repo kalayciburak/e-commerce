@@ -5,6 +5,7 @@ import com.kalayciburak.inventoryservice.model.dto.request.ImageRequest;
 import com.kalayciburak.inventoryservice.service.ImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,7 @@ public class ImagesController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public BaseResponse save(@RequestBody @Valid ImageRequest request) {
         return service.save(request);
     }
@@ -34,6 +36,7 @@ public class ImagesController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

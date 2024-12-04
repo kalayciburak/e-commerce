@@ -1,4 +1,4 @@
-package com.kalayciburak.inventoryservice.model.dto.response.composite.category;
+package com.kalayciburak.inventoryservice.model.dto.response.category;
 
 public record SubcategoryResponse(
         Long subcategoryId,

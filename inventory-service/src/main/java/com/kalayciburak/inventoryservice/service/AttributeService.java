@@ -19,6 +19,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 @RequiredArgsConstructor
 public class AttributeService {
     private final AttributeMapper mapper;
+    private final ProductService productService;
     private final AttributeRepository repository;
 
     @Transactional(readOnly = true)
@@ -49,6 +50,7 @@ public class AttributeService {
 
     public BaseResponse save(AttributeRequest request) {
         var attribute = mapper.toEntity(request);
+        assignProductToAttribute(request, attribute);
         var savedAttribute = repository.save(attribute);
         var response = mapper.toResponse(savedAttribute);
 
@@ -57,6 +59,7 @@ public class AttributeService {
 
     public BaseResponse update(Long id, AttributeRequest request) {
         var attribute = findAttributeByIdOrThrow(id);
+        assignProductToAttribute(request, attribute);
         mapper.updateEntity(request, attribute);
         var updatedAttribute = repository.save(attribute);
         var response = mapper.toResponse(updatedAttribute);
@@ -67,6 +70,11 @@ public class AttributeService {
     public void delete(Long id) {
         findAttributeByIdOrThrow(id);
         repository.softDeleteById(id);
+    }
+
+    private void assignProductToAttribute(AttributeRequest request, Attribute attribute) {
+        var product = productService.findProductByIdOrThrow(request.productId());
+        attribute.setProduct(product);
     }
 
     private Attribute findAttributeByIdOrThrow(Long id) {

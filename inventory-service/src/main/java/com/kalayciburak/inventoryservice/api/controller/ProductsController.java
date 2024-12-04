@@ -5,6 +5,7 @@ import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +30,7 @@ public class ProductsController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public BaseResponse save(@RequestBody @Valid ProductRequest request) {
         return service.save(request);
     }
@@ -39,6 +41,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

@@ -1,4 +1,4 @@
-package com.kalayciburak.inventoryservice.model.dto.response.composite.category;
+package com.kalayciburak.inventoryservice.model.dto.response.category;
 
 import com.kalayciburak.commonpackage.model.Sizeable;
 

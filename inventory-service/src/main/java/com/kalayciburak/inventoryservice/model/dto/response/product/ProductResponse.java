@@ -1,8 +1,6 @@
-package com.kalayciburak.inventoryservice.model.dto.response;
+package com.kalayciburak.inventoryservice.model.dto.response.product;
 
-import com.kalayciburak.inventoryservice.model.dto.response.product.ProductAttributeResponse;
-import com.kalayciburak.inventoryservice.model.dto.response.product.ProductImageResponse;
-import com.kalayciburak.inventoryservice.model.dto.response.product.ProductReviewResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.category.CategoryResponse;
 
 import java.math.BigDecimal;
 import java.util.List;

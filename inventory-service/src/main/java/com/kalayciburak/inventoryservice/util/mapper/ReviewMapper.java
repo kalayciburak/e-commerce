@@ -2,7 +2,7 @@ package com.kalayciburak.inventoryservice.util.mapper;
 
 import com.kalayciburak.commonpackage.util.mapper.BaseMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.ReviewRequest;
-import com.kalayciburak.inventoryservice.model.dto.response.ReviewResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.review.ReviewResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -2,9 +2,8 @@ package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
-import com.kalayciburak.inventoryservice.model.dto.response.composite.category.AllParentCategoriesResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.category.AllParentCategoriesResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Category;
-import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.CategoryRepository;
 import com.kalayciburak.inventoryservice.util.mapper.CategoryMapper;
 import jakarta.persistence.EntityExistsException;
@@ -12,8 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Category.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
@@ -72,7 +69,7 @@ public class CategoryService {
     public BaseResponse save(CategoryRequest request) {
         checkCategoryUniqueness(request.name());
         var category = mapper.toEntity(request);
-        if (request.parentId() != null) category.setParent(findCategoryByIdOrThrow(request.parentId()));
+        assignParentCategory(request, category);
         var savedCategory = repository.save(category);
         var response = mapper.toResponse(savedCategory);
 
@@ -94,6 +91,10 @@ public class CategoryService {
         repository.softDeleteById(id);
     }
 
+    private void assignParentCategory(CategoryRequest request, Category category) {
+        if (request.parentId() != null) category.setParent(findCategoryByIdOrThrow(request.parentId()));
+    }
+
     /**
      * <b>Kategorinin üst kategorisini günceller.</b>
      * <p>
@@ -110,15 +111,6 @@ public class CategoryService {
 
     private void checkCategoryUniqueness(String name) {
         if (repository.existsByName(name)) throw new EntityExistsException(EXISTS);
-    }
-
-    private void collectProductsFromSubcategories(Category category, Set<Product> allProducts) {
-        if (category.getSubcategories() != null) {
-            for (Category subCategory : category.getSubcategories()) {
-                allProducts.addAll(subCategory.getProducts());
-                collectProductsFromSubcategories(subCategory, allProducts);
-            }
-        }
     }
 
     protected Category findCategoryByIdOrThrow(Long id) {

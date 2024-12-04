@@ -2,9 +2,9 @@ package com.kalayciburak.inventoryservice.util.mapper;
 
 import com.kalayciburak.commonpackage.util.mapper.BaseMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
-import com.kalayciburak.inventoryservice.model.dto.response.CategoryResponse;
-import com.kalayciburak.inventoryservice.model.dto.response.composite.category.CategoryWithSubcategoryResponse;
-import com.kalayciburak.inventoryservice.model.dto.response.composite.category.SubcategoryResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.category.CategoryResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.category.CategoryWithSubcategoryResponse;
+import com.kalayciburak.inventoryservice.model.dto.response.category.SubcategoryResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

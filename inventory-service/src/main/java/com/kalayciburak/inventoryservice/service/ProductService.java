@@ -50,19 +50,19 @@ public class ProductService {
 
     public BaseResponse save(ProductRequest request) {
         var product = mapper.toEntity(request);
-        var category = categoryService.findCategoryByIdOrThrow(request.categoryId());
-        product.setCategory(category);
+        assignCategoryToProduct(request, product);
         var savedProduct = repository.save(product);
-        var response = mapper.toResponse(savedProduct);
+        var response = mapper.toSimpleResponse(savedProduct);
 
         return createSuccessResponse(response, SAVED);
     }
 
     public BaseResponse update(Long id, ProductRequest request) {
         var product = findProductByIdOrThrow(id);
+        assignCategoryToProduct(request, product);
         mapper.updateEntity(request, product);
         var updatedProduct = repository.save(product);
-        var response = mapper.toResponse(updatedProduct);
+        var response = mapper.toSimpleResponse(updatedProduct);
 
         return createSuccessResponse(response, UPDATED);
     }
@@ -72,7 +72,12 @@ public class ProductService {
         repository.softDeleteById(id);
     }
 
-    private Product findProductByIdOrThrow(Long id) {
+    private void assignCategoryToProduct(ProductRequest request, Product product) {
+        var category = categoryService.findCategoryByIdOrThrow(request.categoryId());
+        product.setCategory(category);
+    }
+
+    protected Product findProductByIdOrThrow(Long id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 }
