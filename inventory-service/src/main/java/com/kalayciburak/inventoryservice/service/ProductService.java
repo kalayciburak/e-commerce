@@ -1,7 +1,10 @@
 package com.kalayciburak.inventoryservice.service;
 
+import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.inventoryservice.broker.kafka.producer.ProductProducer;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
+import com.kalayciburak.inventoryservice.model.dto.response.product.ProductSimpleResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.ProductRepository;
 import com.kalayciburak.inventoryservice.util.mapper.ProductMapper;
@@ -19,6 +22,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductMapper mapper;
+    private final ProductProducer producer;
     private final ProductRepository repository;
     private final CategoryService categoryService;
 
@@ -53,6 +57,7 @@ public class ProductService {
         assignCategoryToProduct(request, product);
         var savedProduct = repository.save(product);
         var response = mapper.toSimpleResponse(savedProduct);
+        produceProductCreatedEvent(response);
 
         return createSuccessResponse(response, SAVED);
     }
@@ -75,6 +80,16 @@ public class ProductService {
     private void assignCategoryToProduct(ProductRequest request, Product product) {
         var category = categoryService.findCategoryByIdOrThrow(request.categoryId());
         product.setCategory(category);
+    }
+
+    /**
+     * Ürün oluşturulduğunda bir {@link ProductCreatedEvent} üretir ve Kafka'ya gönderir.
+     *
+     * @param response Ürün bilgileri
+     */
+    private void produceProductCreatedEvent(ProductSimpleResponse response) {
+        var event = mapper.toProductCreatedEvent(response);
+        producer.sendProductCreatedEvent(event);
     }
 
     protected Product findProductByIdOrThrow(Long id) {

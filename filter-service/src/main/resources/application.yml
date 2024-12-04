@@ -4,6 +4,18 @@ spring:
   data:
     mongodb:
       uri: mongodb://tbyte:010101@127.0.0.1:27017/filterdb?authSource=admin
+  kafka:
+    consumer:
+      group-id: filter-service
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.kalayciburak.*'
 
 server:
   servlet:

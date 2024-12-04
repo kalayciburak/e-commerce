@@ -1,5 +1,6 @@
 package com.kalayciburak.inventoryservice.util.mapper;
 
+import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.commonpackage.util.mapper.BaseMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductResponse;
@@ -21,4 +22,10 @@ public interface ProductMapper extends BaseMapper<ProductResponse, Product> {
     Product toEntity(ProductRequest request);
 
     void updateEntity(ProductRequest request, @MappingTarget Product product);
+
+    // ? Event mapping
+    @Mapping(target = "categoryId", source = "category.id")
+    @Mapping(target = "categoryName", source = "category.name")
+    @Mapping(target = "categoryDescription", source = "category.description")
+    ProductCreatedEvent toProductCreatedEvent(ProductSimpleResponse product);
 }
