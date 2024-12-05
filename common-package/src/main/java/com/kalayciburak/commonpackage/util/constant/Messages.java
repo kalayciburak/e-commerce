@@ -23,6 +23,8 @@ public class Messages {
         public static final String INVALID_ARGUMENT = "Geçersiz argüman. Lütfen doğru bilgileri giriniz.";
         public static final String VALIDATION_ERROR = "Girilen bilgiler hatalı. Lütfen kontrol ediniz.";
         public static final String ENTITY_NOT_FOUND = "Herhangi bir kayıt bulunamadı.";
+        public static final String NO_SUCH_ELEMENT = "Herhangi bir eleman bulunamadı.";
+        public static final String RESOURCE_NOT_FOUND = "Kaynak bulunamadı.";
         public static final String ENTITY_EXISTS = "Kayıt zaten mevcut.";
     }
 

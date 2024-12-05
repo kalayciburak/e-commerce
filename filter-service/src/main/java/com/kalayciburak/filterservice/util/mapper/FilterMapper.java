@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface FilterMapper extends BaseMapper<FilterResponse, Filter> {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "productId", source = "id")
     @Mapping(target = "category.id", source = "categoryId")
     @Mapping(target = "category.name", source = "categoryName")

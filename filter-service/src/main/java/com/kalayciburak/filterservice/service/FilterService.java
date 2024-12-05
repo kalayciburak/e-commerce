@@ -1,6 +1,8 @@
 package com.kalayciburak.filterservice.service;
 
+import com.kalayciburak.commonpackage.advice.exception.EntityNotFoundException;
 import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.filterservice.repository.FilterRepository;
 import com.kalayciburak.filterservice.util.mapper.FilterMapper;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +10,36 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Product.*;
+import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
+
 @Service
 @RequiredArgsConstructor
 public class FilterService {
     private static final Logger log = LoggerFactory.getLogger(FilterService.class);
     private final FilterMapper mapper;
     private final FilterRepository repository;
+
+    public BaseResponse getById(String id) {
+        var filter = repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
+        var data = mapper.toResponse(filter);
+
+        return createSuccessResponse(data, FOUND);
+    }
+
+    public BaseResponse getByProductId(Long productId) {
+        var filter = repository.findByProductId(productId).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
+        var data = mapper.toResponse(filter);
+
+        return createSuccessResponse(data, FOUND);
+    }
+
+    public BaseResponse getAll() {
+        var filters = repository.findAll();
+        var data = filters.stream().map(mapper::toResponse).toList();
+
+        return createSuccessResponse(data, LISTED);
+    }
 
     /**
      * <b>Veritabanına yeni bir ürün kaydeder.</b>
@@ -27,6 +53,6 @@ public class FilterService {
     public void onProductCreatedEvent(ProductCreatedEvent event) {
         var filter = mapper.toEntity(event);
         repository.save(filter);
-        log.info("Product saved to database successfully");
+        log.info("{} saved to database successfully", event.name());
     }
 }

@@ -13,6 +13,7 @@ public class Types {
         public static final String RUNTIME = "ERROR: RUNTIME_EXCEPTION";
         public static final String NOT_FOUND = "ERROR: ENTITY_NOT_FOUND_EXCEPTION";
         public static final String VALIDATION = "ERROR: VALIDATION_EXCEPTION";
+        public static final String RESOURCE_NOT_FOUND = "ERROR: RESOURCE_NOT_FOUND_EXCEPTION";
         public static final String REQUEST_PARAMETER = "ERROR: REQUEST_PARAMETER_EXCEPTION";
         public static final String MEDIA_TYPE = "ERROR: MEDIA_TYPE_EXCEPTION";
         public static final String DATA_INTEGRITY = "ERROR: DATA_INTEGRITY_EXCEPTION";
@@ -27,5 +28,6 @@ public class Types {
         public static final String ILLEGAL_ARGUMENT = "ERROR: ILLEGAL_ARGUMENT_EXCEPTION";
         public static final String ENTITY_NOT_FOUND = "ERROR: ENTITY_NOT_FOUND_EXCEPTION";
         public static final String ENTITY_EXISTS = "ERROR: ENTITY_EXISTS_EXCEPTION";
+        public static final String NO_SUCH_ELEMENT = "ERROR: NO_SUCH_ELEMENT_EXCEPTION";
     }
 }

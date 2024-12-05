@@ -17,8 +17,8 @@ public class JPAExceptionHandler extends BaseExceptionHandler {
     /**
      * {@code EntityExistsException} istisnasını yakalar ve bu tür istisnalar için özel işleme sağlar.
      * <p>
-     * Bu istisna genellikle bir varlık zaten veritabanında mevcutken eklenmeye çalışıldığında fırlatılır.
-     * İlgili hata bilgisi, çakışan veri nedeniyle işlemin başarısız olduğunu kullanıcıya bildirir.
+     * Bu istisna genellikle bir varlık zaten veritabanında mevcutken eklenmeye çalışıldığında fırlatılır. İlgili hata
+     * bilgisi, çakışan veri nedeniyle işlemin başarısız olduğunu kullanıcıya bildirir.
      *
      * @param exception yakalanacak istisna.
      * @return Çakışan varlık bilgilerini içeren {@link ResponseEntity}.
@@ -38,8 +38,8 @@ public class JPAExceptionHandler extends BaseExceptionHandler {
     /**
      * {@code EntityNotFoundException} istisnasını yakalar ve bu türdeki hataları işler.
      * <p>
-     * Bu istisna, istenen bir veri kaynağı veya varlık bulunamadığında fırlatılır.
-     * Hata mesajı, kullanıcıya aranan verinin mevcut olmadığını açıklar.
+     * Bu istisna, istenen bir veri kaynağı veya varlık bulunamadığında fırlatılır. Hata mesajı, kullanıcıya aranan verinin
+     * mevcut olmadığını açıklar.
      *
      * @param exception yakalanacak istisna.
      * @return Bulunamayan varlık bilgilerini içeren {@link ResponseEntity}.

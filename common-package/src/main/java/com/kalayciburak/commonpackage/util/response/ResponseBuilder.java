@@ -27,15 +27,15 @@ public class ResponseBuilder {
     }
 
     public static <T> BaseSuccess<T> createNotFoundResponse(String message) {
-        return new BaseSuccess<>(NOT_FOUND.toString(), message, 0, null);
+        return new BaseSuccess<>(String.valueOf(NOT_FOUND.value()), message, 0, null);
     }
 
     private static String determineSuccessStatusCode(String message) {
-        return creationKeywords.stream()
+        return String.valueOf(creationKeywords.stream()
                 .map(String::toLowerCase)
                 .anyMatch(message.toLowerCase()::contains)
-                ? HttpStatus.CREATED.toString()
-                : HttpStatus.OK.toString();
+                ? HttpStatus.CREATED.value()
+                : HttpStatus.OK.value());
     }
 
     private static int getSize(Object data) {

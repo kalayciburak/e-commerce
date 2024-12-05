@@ -23,6 +23,7 @@ public class Codes {
     public static final String ILLEGAL_ARGUMENT = "2800";
     public static final String ENTITY_NOT_FOUND = "2900";
     public static final String ENTITY_EXISTS = "3000";
+    public static final String NO_SUCH_ELEMENT = "3100";
 
     public static class Inventory {
         public static final String PRODUCT_NOT_AVAILABLE = "9000";

@@ -1,5 +1,7 @@
 package com.kalayciburak.commonpackage.advice;
 
+import com.kalayciburak.commonpackage.advice.exception.EntityNotFoundException;
+import com.kalayciburak.commonpackage.advice.exception.ResourceNotFoundException;
 import com.kalayciburak.commonpackage.model.error.BaseError;
 import com.kalayciburak.commonpackage.util.constant.Codes;
 import com.kalayciburak.commonpackage.util.constant.Messages;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class BaseExceptionHandler {
@@ -23,9 +26,9 @@ public class BaseExceptionHandler {
     /**
      * <b>Genel istisnalar için işleyici tanımlar.</b>
      * <p>
-     * Bu işleyici, {@code Exception} ve {@code RuntimeException} türündeki istisnaları ve alt türlerini yakalar.
-     * İşlenmemiş genel hataları ele alarak sistem genelinde tutarlı bir hata yönetimi stratejisi sağlar.
-     * Bu yöntem, uygulamanın diğer bölümlerinde ayrı ayrı hata yönetimi gereksinimini azaltır.
+     * Bu işleyici, {@code Exception} ve {@code RuntimeException} türündeki istisnaları ve alt türlerini yakalar. İşlenmemiş
+     * genel hataları ele alarak sistem genelinde tutarlı bir hata yönetimi stratejisi sağlar. Bu yöntem, uygulamanın diğer
+     * bölümlerinde ayrı ayrı hata yönetimi gereksinimini azaltır.
      *
      * @param exception yakalanacak istisna.
      * @return Oluşturulan hata ile ilgili bilgileri içeren {@link ResponseEntity}.
@@ -38,8 +41,8 @@ public class BaseExceptionHandler {
     /**
      * {@code IllegalArgumentException} türündeki istisnalar için özel bir işleyici tanımlar.
      * <p>
-     * Bu tür istisnalar, metodlara geçersiz argümanlar gönderildiğinde ortaya çıkar.
-     * İstisna bilgileri, kullanıcıya geçersiz girişin neden olduğu hata hakkında bilgi vermek için kullanılır.
+     * Bu tür istisnalar, metodlara geçersiz argümanlar gönderildiğinde ortaya çıkar. İstisna bilgileri, kullanıcıya geçersiz
+     * girişin neden olduğu hata hakkında bilgi vermek için kullanılır.
      *
      * @param exception yakalanacak istisna.
      * @return Oluşturulan hata ile ilgili bilgileri içeren {@link ResponseEntity}.
@@ -57,10 +60,70 @@ public class BaseExceptionHandler {
     }
 
     /**
+     * {@code NoSuchElementException} türündeki istisnalar için özel bir işleyici tanımlar.
+     * <p>
+     * Bu tür istisnalar, bir koleksiyonun veya veri yapısının içinde aranan elemanın bulunamadığında ortaya çıkar.
+     *
+     * @param exception yakalanacak istisna.
+     * @return Oluşturulan hata ile ilgili bilgileri içeren {@link ResponseEntity}.
+     */
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<BaseError<?>> handleNoSuchElementException(NoSuchElementException exception) {
+        var error = new BaseError<>(
+                Types.Exception.NO_SUCH_ELEMENT,
+                Codes.NO_SUCH_ELEMENT,
+                Messages.Error.NO_SUCH_ELEMENT,
+                HttpStatus.NOT_FOUND,
+                exception);
+
+        return buildResponseEntity(error);
+    }
+
+    /**
+     * {@code ResourceNotFoundException} türündeki istisnalar için özel bir işleyici tanımlar.
+     * <p>
+     * Bu tür istisnalar, bir kaynağın bulunamadığında ortaya çıkar.
+     *
+     * @param exception yakalanacak istisna.
+     * @return Oluşturulan hata ile ilgili bilgileri içeren {@link ResponseEntity}.
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<BaseError<?>> handleResourceNotFoundException(ResourceNotFoundException exception) {
+        var error = new BaseError<>(
+                Types.Exception.RESOURCE_NOT_FOUND,
+                Codes.RESOURCE_NOT_FOUND,
+                Messages.Error.RESOURCE_NOT_FOUND,
+                HttpStatus.NOT_FOUND,
+                exception);
+
+        return buildResponseEntity(error);
+    }
+
+    /**
+     * {@code EntityNotFoundException} türündeki istisnalar için özel bir işleyici tanımlar.
+     * <p>
+     * Bu tür istisnalar, bir varlığın bulunamadığında ortaya çıkar.
+     *
+     * @param exception yakalanacak istisna.
+     * @return Oluşturulan hata ile ilgili bilgileri içeren {@link ResponseEntity}.
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<BaseError<?>> handleEntityNotFoundException(EntityNotFoundException exception) {
+        var error = new BaseError<>(
+                Types.Exception.ENTITY_NOT_FOUND,
+                Codes.ENTITY_NOT_FOUND,
+                Messages.Error.ENTITY_NOT_FOUND,
+                HttpStatus.NOT_FOUND,
+                exception);
+
+        return buildResponseEntity(error);
+    }
+
+    /**
      * {@code MethodArgumentNotValidException} istisnasını yakalar ve bu türdeki doğrulama hatalarını işler.
      * <p>
-     * Bu işleyici, genellikle Spring MVC'nin otomatik doğrulama mekanizmaları tarafından fırlatılır ve
-     * kullanıcıya yapılan girişlerin neden geçersiz olduğuna dair ayrıntılı bilgiler sağlar.
+     * Bu işleyici, genellikle Spring MVC'nin otomatik doğrulama mekanizmaları tarafından fırlatılır ve kullanıcıya yapılan
+     * girişlerin neden geçersiz olduğuna dair ayrıntılı bilgiler sağlar.
      *
      * @param exception yakalanacak istisna.
      * @return Doğrulama hatalarını içeren {@link ResponseEntity}.
