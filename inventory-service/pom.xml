@@ -13,7 +13,7 @@
     <name>inventory-service</name>
     <description>inventory-service</description>
     <properties>
-        <mysql.version>8.0.33</mysql.version>
+        <mysql.version>9.1.0</mysql.version>
         <common-jpa-package.version>0.0.1-SNAPSHOT</common-jpa-package.version>
     </properties>
     <dependencies>
