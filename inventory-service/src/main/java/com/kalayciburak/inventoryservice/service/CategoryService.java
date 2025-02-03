@@ -1,5 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
+import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.category.AllParentCategoriesResponse;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Category.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
@@ -21,6 +23,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryMapper mapper;
+    private final AuditorAwareImpl auditorAware;
     private final CategoryRepository repository;
 
     @Transactional(readOnly = true)
@@ -88,7 +91,7 @@ public class CategoryService {
 
     public void delete(Long id) {
         findCategoryByIdOrThrow(id);
-        repository.softDeleteById(id);
+        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignParentCategory(CategoryRequest request, Category category) {
@@ -98,8 +101,8 @@ public class CategoryService {
     /**
      * <b>Kategorinin üst kategorisini günceller.</b>
      * <p>
-     * Eğer {@code request.parentId} null ise, kategorinin üst kategorisi null olarak ayarlanır.
-     * Değilse, belirtilen üst kategori ID'sine sahip kategoriyi bulur ve onu üst kategori olarak ayarlar.
+     * Eğer {@code request.parentId} null ise, kategorinin üst kategorisi null olarak ayarlanır. Değilse, belirtilen üst
+     * kategori ID'sine sahip kategoriyi bulur ve onu üst kategori olarak ayarlar.
      *
      * @param request  Yeni kategori bilgileri.
      * @param category Güncellenecek kategori.

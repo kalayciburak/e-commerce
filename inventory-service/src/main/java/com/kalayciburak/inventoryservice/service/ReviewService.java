@@ -1,5 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
+import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.ReviewRequest;
 import com.kalayciburak.inventoryservice.model.entitiy.Review;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Review.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
@@ -20,6 +22,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 public class ReviewService {
     private final ReviewMapper mapper;
     private final ReviewRepository repository;
+    private final AuditorAwareImpl auditorAware;
     private final ProductService productService;
 
     @Transactional(readOnly = true)
@@ -60,7 +63,7 @@ public class ReviewService {
 
     public void delete(Long id) {
         findReviewByIdOrThrow(id);
-        repository.softDeleteById(id);
+        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignProductToReview(ReviewRequest request, Review review) {

@@ -1,5 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
+import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.broker.kafka.producer.ProductProducer;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Product.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
@@ -24,6 +26,7 @@ public class ProductService {
     private final ProductMapper mapper;
     private final ProductProducer producer;
     private final ProductRepository repository;
+    private final AuditorAwareImpl auditorAware;
     private final CategoryService categoryService;
 
     @Transactional(readOnly = true)
@@ -74,7 +77,7 @@ public class ProductService {
 
     public void delete(Long id) {
         findProductByIdOrThrow(id);
-        repository.softDeleteById(id);
+        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignCategoryToProduct(ProductRequest request, Product product) {

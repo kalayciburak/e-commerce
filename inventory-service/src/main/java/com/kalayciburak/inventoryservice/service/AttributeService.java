@@ -1,5 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
+import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.model.response.BaseResponse;
 import com.kalayciburak.inventoryservice.model.dto.request.AttributeRequest;
 import com.kalayciburak.inventoryservice.model.entitiy.Attribute;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Attribute.*;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
@@ -19,6 +21,7 @@ import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.creat
 @RequiredArgsConstructor
 public class AttributeService {
     private final AttributeMapper mapper;
+    private final AuditorAwareImpl auditorAware;
     private final ProductService productService;
     private final AttributeRepository repository;
 
@@ -69,7 +72,7 @@ public class AttributeService {
 
     public void delete(Long id) {
         findAttributeByIdOrThrow(id);
-        repository.softDeleteById(id);
+        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignProductToAttribute(AttributeRequest request, Attribute attribute) {

@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
     @Modifying
     @Transactional
-    @Query("update #{#entityName} e set e.isActive = false, e.deletedAt = current_timestamp where e.id = ?1")
-    void softDeleteById(ID id);
+    @Query("update #{#entityName} e set e.audit.isActive = false, e.audit.deletedAt = current_timestamp, e.audit.deletedBy = ?1 where e.id = ?2")
+    void softDeleteById(String deletedBy, ID id);
 
     @Modifying
     @Transactional
-    @Query("update #{#entityName} e set e.isActive = false, e.deletedAt = current_timestamp where e.id in :ids")
-    void softDeleteByIds(@Param("ids") Iterable<ID> ids);
+    @Query("update #{#entityName} e set e.audit.isActive = false, e.audit.deletedAt = current_timestamp, e.audit.deletedBy = ?1 where e.id in :ids")
+    void softDeleteByIds(@Param("deletedBy") String deletedBy, @Param("ids") Iterable<ID> ids);
 }
