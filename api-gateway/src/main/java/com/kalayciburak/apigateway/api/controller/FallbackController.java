@@ -1,6 +1,6 @@
 package com.kalayciburak.apigateway.api.controller;
 
-import com.kalayciburak.apigateway.model.dto.response.ErrorResponse;
+import com.kalayciburak.apigateway.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

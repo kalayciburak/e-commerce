@@ -1,4 +1,4 @@
-package com.kalayciburak.apigateway.model.dto.response;
+package com.kalayciburak.apigateway.response;
 
 import java.time.LocalDateTime;
 
