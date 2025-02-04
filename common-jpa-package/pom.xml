@@ -10,6 +10,7 @@
     </parent>
     <artifactId>common-jpa-package</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>common-jpa-package</name>
     <description>common-jpa-package</description>
     <properties>
