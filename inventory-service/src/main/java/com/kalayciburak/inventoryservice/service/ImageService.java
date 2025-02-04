@@ -1,20 +1,20 @@
 package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
+import com.kalayciburak.inventoryservice.mapper.ImageMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.ImageRequest;
 import com.kalayciburak.inventoryservice.model.entitiy.Image;
 import com.kalayciburak.inventoryservice.repository.ImageRepository;
-import com.kalayciburak.inventoryservice.util.mapper.ImageMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
-import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Image.*;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
+import static com.kalayciburak.commonjpapackage.constant.Auditor.ANONYMOUS;
+import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Image.*;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createNotFoundResponse;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class ImageService {
     private final ProductService productService;
 
     @Transactional(readOnly = true)
-    public BaseResponse getAll() {
+    public Response getAll() {
         var images = repository.findAll();
         if (images.isEmpty()) return createNotFoundResponse(NOT_FOUND);
         var response = images.stream().map(mapper::toResponse).toList();
@@ -35,14 +35,14 @@ public class ImageService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getById(Long id) {
+    public Response getById(Long id) {
         var image = findImageByIdOrThrow(id);
         var response = mapper.toResponse(image);
 
         return createSuccessResponse(response, FOUND);
     }
 
-    public BaseResponse save(ImageRequest request) {
+    public Response save(ImageRequest request) {
         var image = mapper.toEntity(request);
         assignProductToImage(request, image);
         var savedImage = repository.save(image);
@@ -51,7 +51,7 @@ public class ImageService {
         return createSuccessResponse(response, SAVED);
     }
 
-    public BaseResponse update(Long id, ImageRequest request) {
+    public Response update(Long id, ImageRequest request) {
         var image = findImageByIdOrThrow(id);
         assignProductToImage(request, image);
         mapper.updateEntity(request, image);

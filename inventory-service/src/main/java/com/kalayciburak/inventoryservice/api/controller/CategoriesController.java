@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.api.controller;
 
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.service.CategoryService;
 import jakarta.validation.Valid;
@@ -15,38 +15,38 @@ public class CategoriesController {
     private final CategoryService service;
 
     @GetMapping
-    public BaseResponse getAll() {
+    public Response getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public BaseResponse getById(@PathVariable Long id) {
+    public Response getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @GetMapping("/q")
-    public BaseResponse getByName(@RequestParam String name) {
+    public Response getByName(@RequestParam String name) {
         return service.getByName(name);
     }
 
     @GetMapping("/{id}/details")
-    public BaseResponse getCategoryDetails(@PathVariable Long id) {
+    public Response getCategoryDetails(@PathVariable Long id) {
         return service.getCategoryWithSubcategoryInfo(id);
     }
 
     @GetMapping("/all-parents/details")
-    public BaseResponse getAllParentCategories() {
+    public Response getAllParentCategories() {
         return service.getAllParentCategoriesWithSubcategoryInfo();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse save(@RequestBody @Valid CategoryRequest request) {
+    public Response save(@RequestBody @Valid CategoryRequest request) {
         return service.save(request);
     }
 
     @PutMapping("/{id}")
-    public BaseResponse update(@PathVariable Long id, @RequestBody @Valid CategoryRequest request) {
+    public Response update(@PathVariable Long id, @RequestBody @Valid CategoryRequest request) {
         return service.update(id, request);
     }
 

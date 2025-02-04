@@ -1,22 +1,22 @@
 package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
+import com.kalayciburak.inventoryservice.mapper.CategoryMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.CategoryRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.category.AllParentCategoriesResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Category;
 import com.kalayciburak.inventoryservice.repository.CategoryRepository;
-import com.kalayciburak.inventoryservice.util.mapper.CategoryMapper;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
-import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Category.*;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
+import static com.kalayciburak.commonjpapackage.constant.Auditor.ANONYMOUS;
+import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Category.*;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createNotFoundResponse;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
 @Transactional
@@ -27,7 +27,7 @@ public class CategoryService {
     private final CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public BaseResponse getAll() {
+    public Response getAll() {
         var categories = repository.findAll();
         if (categories.isEmpty()) return createNotFoundResponse(NOT_FOUND);
         var response = categories.stream().map(mapper::toResponse).toList();
@@ -36,7 +36,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getById(Long id) {
+    public Response getById(Long id) {
         var category = findCategoryByIdOrThrow(id);
         var response = mapper.toResponse(category);
 
@@ -44,7 +44,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getByName(String name) {
+    public Response getByName(String name) {
         var category = repository.findByName(name);
         if (category.isEmpty()) return createNotFoundResponse(NOT_FOUND);
         var response = mapper.toResponse(category.get());
@@ -53,7 +53,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getCategoryWithSubcategoryInfo(Long id) {
+    public Response getCategoryWithSubcategoryInfo(Long id) {
         var category = findCategoryByIdOrThrow(id);
         var response = mapper.toCategoryWithSubcategoryResponse(category);
 
@@ -61,7 +61,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getAllParentCategoriesWithSubcategoryInfo() {
+    public Response getAllParentCategoriesWithSubcategoryInfo() {
         var parentCategories = repository.findAllByParentIsNull();
         var categoryResponses = mapper.toCategoryWithSubcategoryResponseList(parentCategories);
         var response = new AllParentCategoriesResponse(categoryResponses);
@@ -69,7 +69,7 @@ public class CategoryService {
         return createSuccessResponse(response, PARENT_CATEGORIES_INFO);
     }
 
-    public BaseResponse save(CategoryRequest request) {
+    public Response save(CategoryRequest request) {
         checkCategoryUniqueness(request.name());
         var category = mapper.toEntity(request);
         assignParentCategory(request, category);
@@ -79,7 +79,7 @@ public class CategoryService {
         return createSuccessResponse(response, SAVED);
     }
 
-    public BaseResponse update(Long id, CategoryRequest request) {
+    public Response update(Long id, CategoryRequest request) {
         var category = findCategoryByIdOrThrow(id);
         updateParentCategory(request, category);
         mapper.updateEntity(request, category);

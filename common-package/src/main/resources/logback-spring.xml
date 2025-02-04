@@ -39,11 +39,11 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="com.kalayciburak.commonpackage.aspect.ExceptionLoggingAspect" level="ERROR">
+    <logger name="com.kalayciburak.commonpackage.aspect.logging.ExceptionLoggingAspect" level="ERROR">
         <appender-ref ref="GELF"/>
     </logger>
 
-    <logger name="com.kalayciburak.commonpackage.filter.LoggingFilter" level="DEBUG">
+    <logger name="com.kalayciburak.commonpackage.web.filter.LoggingFilter" level="DEBUG">
         <appender-ref ref="GELF"/>
     </logger>
 </configuration>

@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.api.controller;
 
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.inventoryservice.model.dto.request.ReviewRequest;
 import com.kalayciburak.inventoryservice.service.ReviewService;
 import jakarta.validation.Valid;
@@ -15,23 +15,23 @@ public class ReviewsController {
     private final ReviewService service;
 
     @GetMapping
-    public BaseResponse getAll() {
+    public Response getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public BaseResponse getById(@PathVariable Long id) {
+    public Response getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse save(@RequestBody @Valid ReviewRequest request) {
+    public Response save(@RequestBody @Valid ReviewRequest request) {
         return service.save(request);
     }
 
     @PutMapping("/{id}")
-    public BaseResponse update(@PathVariable Long id, @RequestBody @Valid ReviewRequest request) {
+    public Response update(@PathVariable Long id, @RequestBody @Valid ReviewRequest request) {
         return service.update(id, request);
     }
 

@@ -1,7 +1,7 @@
 package com.kalayciburak.filterservice.broker.kafka;
 
-import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
-import com.kalayciburak.commonpackage.util.event.BaseEvent;
+import com.kalayciburak.commonpackage.messaging.event.BaseEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.filterservice.service.FilterService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

@@ -1,10 +1,10 @@
 package com.kalayciburak.inventoryservice;
 
+import com.kalayciburak.inventoryservice.mapper.ProductMapper;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.ProductRepository;
 import com.kalayciburak.inventoryservice.service.ProductService;
-import com.kalayciburak.inventoryservice.util.mapper.ProductMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.List;
 import java.util.Optional;
 
-import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Product.LISTED;
+import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Product.LISTED;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

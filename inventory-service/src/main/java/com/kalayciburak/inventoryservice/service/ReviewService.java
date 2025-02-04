@@ -1,20 +1,20 @@
 package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
+import com.kalayciburak.inventoryservice.mapper.ReviewMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.ReviewRequest;
 import com.kalayciburak.inventoryservice.model.entitiy.Review;
 import com.kalayciburak.inventoryservice.repository.ReviewRepository;
-import com.kalayciburak.inventoryservice.util.mapper.ReviewMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonpackage.util.constant.Auditor.ANONYMOUS;
-import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Review.*;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createNotFoundResponse;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
+import static com.kalayciburak.commonjpapackage.constant.Auditor.ANONYMOUS;
+import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Review.*;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createNotFoundResponse;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class ReviewService {
     private final ProductService productService;
 
     @Transactional(readOnly = true)
-    public BaseResponse getAll() {
+    public Response getAll() {
         var reviews = repository.findAll();
         if (reviews.isEmpty()) return createNotFoundResponse(NOT_FOUND);
         var response = reviews.stream().map(mapper::toResponse).toList();
@@ -35,14 +35,14 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public BaseResponse getById(Long id) {
+    public Response getById(Long id) {
         var review = findReviewByIdOrThrow(id);
         var response = mapper.toResponse(review);
 
         return createSuccessResponse(response, FOUND);
     }
 
-    public BaseResponse save(ReviewRequest request) {
+    public Response save(ReviewRequest request) {
         var review = mapper.toEntity(request);
         assignProductToReview(request, review);
         var savedReview = repository.save(review);
@@ -51,7 +51,7 @@ public class ReviewService {
         return createSuccessResponse(response, SAVED);
     }
 
-    public BaseResponse update(Long id, ReviewRequest request) {
+    public Response update(Long id, ReviewRequest request) {
         var review = findReviewByIdOrThrow(id);
         assignProductToReview(request, review);
         mapper.updateEntity(request, review);

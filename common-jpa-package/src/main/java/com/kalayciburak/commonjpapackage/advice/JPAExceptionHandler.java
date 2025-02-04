@@ -1,10 +1,10 @@
 package com.kalayciburak.commonjpapackage.advice;
 
-import com.kalayciburak.commonpackage.advice.BaseExceptionHandler;
-import com.kalayciburak.commonpackage.model.error.BaseError;
-import com.kalayciburak.commonpackage.util.constant.Codes;
-import com.kalayciburak.commonpackage.util.constant.Messages;
-import com.kalayciburak.commonpackage.util.constant.Types;
+import com.kalayciburak.commonpackage.core.advice.BaseExceptionHandler;
+import com.kalayciburak.commonpackage.core.constant.Codes;
+import com.kalayciburak.commonpackage.core.constant.Messages;
+import com.kalayciburak.commonpackage.core.constant.Types;
+import com.kalayciburak.commonpackage.core.response.error.ErrorResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,8 @@ public class JPAExceptionHandler extends BaseExceptionHandler {
      * @return Çakışan varlık bilgilerini içeren {@link ResponseEntity}.
      */
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<BaseError<?>> handleEntityExistsException(EntityExistsException exception) {
-        var error = new BaseError<>(
+    public ResponseEntity<ErrorResponse<?>> handleEntityExistsException(EntityExistsException exception) {
+        var error = new ErrorResponse<>(
                 Types.Exception.ENTITY_EXISTS,
                 Codes.ENTITY_EXISTS,
                 Messages.Error.ENTITY_EXISTS,
@@ -45,8 +45,8 @@ public class JPAExceptionHandler extends BaseExceptionHandler {
      * @return Bulunamayan varlık bilgilerini içeren {@link ResponseEntity}.
      */
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<BaseError<?>> handleEntityNotFoundException(EntityNotFoundException exception) {
-        var error = new BaseError<>(
+    public ResponseEntity<ErrorResponse<?>> handleEntityNotFoundException(EntityNotFoundException exception) {
+        var error = new ErrorResponse<>(
                 Types.Exception.ENTITY_NOT_FOUND,
                 Codes.ENTITY_NOT_FOUND,
                 Messages.Error.ENTITY_NOT_FOUND,

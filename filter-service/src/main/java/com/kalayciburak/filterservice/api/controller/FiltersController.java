@@ -1,6 +1,6 @@
 package com.kalayciburak.filterservice.api.controller;
 
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.filterservice.service.FilterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +15,17 @@ public class FiltersController {
     private final FilterService service;
 
     @GetMapping("/{id}")
-    public BaseResponse getByFilterId(@PathVariable String id) {
+    public Response getByFilterId(@PathVariable String id) {
         return service.getById(id);
     }
 
     @GetMapping("/product/{productId}")
-    public BaseResponse getByProductId(@PathVariable Long productId) {
+    public Response getByProductId(@PathVariable Long productId) {
         return service.getByProductId(productId);
     }
 
     @GetMapping
-    public BaseResponse getAll() {
+    public Response getAll() {
         return service.getAll();
     }
 }

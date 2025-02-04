@@ -1,8 +1,8 @@
 package com.kalayciburak.filterservice.service;
 
-import com.kalayciburak.commonpackage.advice.exception.EntityNotFoundException;
-import com.kalayciburak.commonpackage.event.inventory.ProductCreatedEvent;
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.advice.exception.EntityNotFoundException;
+import com.kalayciburak.commonpackage.core.response.common.Response;
+import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.filterservice.repository.FilterRepository;
 import com.kalayciburak.filterservice.util.mapper.FilterMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import static com.kalayciburak.commonpackage.util.constant.Messages.Inventory.Product.*;
-import static com.kalayciburak.commonpackage.util.response.ResponseBuilder.createSuccessResponse;
+import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Product.*;
+import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -20,21 +20,21 @@ public class FilterService {
     private final FilterMapper mapper;
     private final FilterRepository repository;
 
-    public BaseResponse getById(String id) {
+    public Response getById(String id) {
         var filter = repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
         var data = mapper.toResponse(filter);
 
         return createSuccessResponse(data, FOUND);
     }
 
-    public BaseResponse getByProductId(Long productId) {
+    public Response getByProductId(Long productId) {
         var filter = repository.findByProductId(productId).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
         var data = mapper.toResponse(filter);
 
         return createSuccessResponse(data, FOUND);
     }
 
-    public BaseResponse getAll() {
+    public Response getAll() {
         var filters = repository.findAll();
         var data = filters.stream().map(mapper::toResponse).toList();
 

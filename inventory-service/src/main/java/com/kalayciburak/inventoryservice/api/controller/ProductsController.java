@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.api.controller;
 
-import com.kalayciburak.commonpackage.model.response.BaseResponse;
+import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.service.ProductService;
 import jakarta.validation.Valid;
@@ -15,28 +15,28 @@ public class ProductsController {
     private final ProductService service;
 
     @GetMapping
-    public BaseResponse getAll() {
+    public Response getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public BaseResponse getById(@PathVariable Long id) {
+    public Response getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @GetMapping("/q")
-    public BaseResponse getByName(@RequestParam String name) {
+    public Response getByName(@RequestParam String name) {
         return service.getByName(name);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse save(@RequestBody @Valid ProductRequest request) {
+    public Response save(@RequestBody @Valid ProductRequest request) {
         return service.save(request);
     }
 
     @PutMapping("/{id}")
-    public BaseResponse update(@PathVariable Long id, @RequestBody @Valid ProductRequest request) {
+    public Response update(@PathVariable Long id, @RequestBody @Valid ProductRequest request) {
         return service.update(id, request);
     }
 
