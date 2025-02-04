@@ -6,16 +6,11 @@
         <groupId>com.kalayciburak</groupId>
         <artifactId>common-config</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../common-config/pom.xml</relativePath>
     </parent>
     <artifactId>common-jpa</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
     <name>common-jpa</name>
     <description>common-jpa</description>
-    <properties>
-        <common-package.version>0.0.1-SNAPSHOT</common-package.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,7 +19,6 @@
         <dependency>
             <groupId>com.kalayciburak</groupId>
             <artifactId>common-package</artifactId>
-            <version>${common-package.version}</version>
         </dependency>
     </dependencies>
 </project>

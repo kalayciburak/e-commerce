@@ -85,6 +85,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.kalayciburak</groupId>
+                <artifactId>common-package</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kalayciburak</groupId>
+                <artifactId>common-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
