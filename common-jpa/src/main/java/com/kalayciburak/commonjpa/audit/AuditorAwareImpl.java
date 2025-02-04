@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.audit;
+package com.kalayciburak.commonjpa.audit;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.advice;
+package com.kalayciburak.commonjpa.advice;
 
 import com.kalayciburak.commonpackage.core.advice.BaseExceptionHandler;
 import com.kalayciburak.commonpackage.core.constant.Codes;

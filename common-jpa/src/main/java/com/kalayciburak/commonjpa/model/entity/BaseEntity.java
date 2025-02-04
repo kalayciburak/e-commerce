@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.model.entity;
+package com.kalayciburak.commonjpa.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

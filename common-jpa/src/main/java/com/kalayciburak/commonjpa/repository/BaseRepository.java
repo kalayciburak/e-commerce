@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.repository;
+package com.kalayciburak.commonjpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

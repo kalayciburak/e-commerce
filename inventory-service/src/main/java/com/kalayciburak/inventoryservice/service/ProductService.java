@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
-import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
+import com.kalayciburak.commonjpa.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.inventoryservice.broker.kafka.producer.ProductProducer;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonjpapackage.constant.Auditor.ANONYMOUS;
+import static com.kalayciburak.commonjpa.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Product.*;
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;

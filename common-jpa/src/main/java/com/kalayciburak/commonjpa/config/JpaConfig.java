@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.config;
+package com.kalayciburak.commonjpa.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

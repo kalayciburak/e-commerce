@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.repository;
 
-import com.kalayciburak.commonjpapackage.repository.BaseRepository;
+import com.kalayciburak.commonjpa.repository.BaseRepository;
 import com.kalayciburak.inventoryservice.model.entitiy.Attribute;
 import org.springframework.stereotype.Repository;
 

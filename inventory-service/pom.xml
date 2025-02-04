@@ -14,7 +14,7 @@
     <description>inventory-service</description>
     <properties>
         <mysql.version>9.1.0</mysql.version>
-        <common-jpa-package.version>0.0.1-SNAPSHOT</common-jpa-package.version>
+        <common-jpa.version>0.0.1-SNAPSHOT</common-jpa.version>
     </properties>
     <dependencies>
         <dependency>
@@ -25,8 +25,8 @@
         </dependency>
         <dependency>
             <groupId>com.kalayciburak</groupId>
-            <artifactId>common-jpa-package</artifactId>
-            <version>${common-jpa-package.version}</version>
+            <artifactId>common-jpa</artifactId>
+            <version>${common-jpa.version}</version>
         </dependency>
     </dependencies>
 </project>

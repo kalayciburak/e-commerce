@@ -8,11 +8,11 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
-    <artifactId>common-jpa-package</artifactId>
+    <artifactId>common-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>common-jpa-package</name>
-    <description>common-jpa-package</description>
+    <name>common-jpa</name>
+    <description>common-jpa</description>
     <properties>
         <common-package.version>0.0.1-SNAPSHOT</common-package.version>
     </properties>

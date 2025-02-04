@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.service;
 
-import com.kalayciburak.commonjpapackage.audit.AuditorAwareImpl;
+import com.kalayciburak.commonjpa.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.core.response.common.Response;
 import com.kalayciburak.inventoryservice.mapper.AttributeMapper;
 import com.kalayciburak.inventoryservice.model.dto.request.AttributeRequest;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kalayciburak.commonjpapackage.constant.Auditor.ANONYMOUS;
+import static com.kalayciburak.commonjpa.constant.Auditor.ANONYMOUS;
 import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Attribute.*;
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createNotFoundResponse;
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;

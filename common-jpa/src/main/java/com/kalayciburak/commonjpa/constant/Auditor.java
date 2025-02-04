@@ -1,4 +1,4 @@
-package com.kalayciburak.commonjpapackage.constant;
+package com.kalayciburak.commonjpa.constant;
 
 public class Auditor {
     public static final String SYSTEM = "system";

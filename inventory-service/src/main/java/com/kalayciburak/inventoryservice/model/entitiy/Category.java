@@ -1,6 +1,6 @@
 package com.kalayciburak.inventoryservice.model.entitiy;
 
-import com.kalayciburak.commonjpapackage.model.entity.BaseEntity;
+import com.kalayciburak.commonjpa.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
