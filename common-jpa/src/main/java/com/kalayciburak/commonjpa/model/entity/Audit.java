@@ -23,16 +23,16 @@ public class Audit {
     private boolean isActive = true;
 
     @CreatedDate
-    @Column(name = "created", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @JsonFormat(pattern = DATE_TIME_FORMAT, timezone = TIMEZONE)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated", insertable = false)
+    @Column(name = "updated_at", insertable = false)
     @JsonFormat(pattern = DATE_TIME_FORMAT, timezone = TIMEZONE)
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted")
+    @Column(name = "deleted_at")
     @JsonFormat(pattern = DATE_TIME_FORMAT, timezone = TIMEZONE)
     private LocalDateTime deletedAt;
 

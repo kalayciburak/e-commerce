@@ -1,7 +1,7 @@
 package com.kalayciburak.inventoryservice.mapper;
 
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.commonpackage.core.mapper.BaseMapper;
+import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductResponse;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductSimpleResponse;
@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ReviewMapper.class})
 public interface ProductMapper extends BaseMapper<ProductResponse, Product> {
     ProductResponse toResponse(Product product);
 
