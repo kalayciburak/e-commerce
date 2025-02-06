@@ -2,7 +2,7 @@ package com.kalayciburak.filterservice.service;
 
 import com.kalayciburak.commonpackage.core.advice.exception.EntityNotFoundException;
 import com.kalayciburak.commonpackage.core.response.common.Response;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
 import com.kalayciburak.filterservice.mapper.FilterMapper;
 import com.kalayciburak.filterservice.repository.FilterRepository;
 import lombok.RequiredArgsConstructor;

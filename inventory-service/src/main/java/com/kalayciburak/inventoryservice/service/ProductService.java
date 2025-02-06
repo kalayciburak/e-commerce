@@ -2,9 +2,9 @@ package com.kalayciburak.inventoryservice.service;
 
 import com.kalayciburak.commonjpa.audit.AuditorAwareImpl;
 import com.kalayciburak.commonpackage.core.response.common.Response;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
-import com.kalayciburak.inventoryservice.broker.kafka.producer.ProductProducer;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
 import com.kalayciburak.inventoryservice.mapper.ProductMapper;
+import com.kalayciburak.inventoryservice.messaging.producer.ProductProducer;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductSimpleResponse;
 import com.kalayciburak.inventoryservice.model.entitiy.Product;

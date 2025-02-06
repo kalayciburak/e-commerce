@@ -1,7 +1,7 @@
 package com.kalayciburak.inventoryservice.mapper;
 
 import com.kalayciburak.commonpackage.core.mapper.BaseMapper;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
 import com.kalayciburak.inventoryservice.model.dto.request.ProductRequest;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductResponse;
 import com.kalayciburak.inventoryservice.model.dto.response.product.ProductSimpleResponse;

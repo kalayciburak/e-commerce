@@ -1,7 +1,7 @@
-package com.kalayciburak.filterservice.broker.kafka;
+package com.kalayciburak.filterservice.messaging.inventory;
 
 import com.kalayciburak.commonpackage.messaging.event.BaseEvent;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
 import com.kalayciburak.filterservice.service.FilterService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class InventoryConsumer {
-    private static final Logger log = LoggerFactory.getLogger(InventoryConsumer.class);
+public class ProductConsumer {
+    private static final Logger log = LoggerFactory.getLogger(ProductConsumer.class);
     private final FilterService service;
 
     /**

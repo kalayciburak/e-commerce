@@ -1,7 +1,7 @@
 package com.kalayciburak.filterservice.mapper;
 
 import com.kalayciburak.commonpackage.core.mapper.BaseMapper;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
 import com.kalayciburak.filterservice.model.dto.response.FilterResponse;
 import com.kalayciburak.filterservice.model.entity.Filter;
 import org.mapstruct.Mapper;

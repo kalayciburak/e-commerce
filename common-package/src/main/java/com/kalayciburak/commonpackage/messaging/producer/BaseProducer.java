@@ -1,4 +1,4 @@
-package com.kalayciburak.commonpackage.messaging.broker;
+package com.kalayciburak.commonpackage.messaging.producer;
 
 import com.kalayciburak.commonpackage.messaging.event.BaseEvent;
 import lombok.RequiredArgsConstructor;

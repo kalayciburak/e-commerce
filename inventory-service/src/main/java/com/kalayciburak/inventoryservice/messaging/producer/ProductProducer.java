@@ -1,7 +1,7 @@
-package com.kalayciburak.inventoryservice.broker.kafka.producer;
+package com.kalayciburak.inventoryservice.messaging.producer;
 
-import com.kalayciburak.commonpackage.messaging.broker.BaseProducer;
-import com.kalayciburak.commonpackage.messaging.event.inventory.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.event.inventory.product.ProductCreatedEvent;
+import com.kalayciburak.commonpackage.messaging.producer.BaseProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

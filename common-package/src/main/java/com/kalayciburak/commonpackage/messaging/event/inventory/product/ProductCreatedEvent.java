@@ -1,4 +1,4 @@
-package com.kalayciburak.commonpackage.messaging.event.inventory;
+package com.kalayciburak.commonpackage.messaging.event.inventory.product;
 
 import com.kalayciburak.commonpackage.messaging.event.BaseEvent;
 

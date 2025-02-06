@@ -1,4 +1,4 @@
-package com.kalayciburak.inventoryservice.model.dto.response.review;
+package com.kalayciburak.inventoryservice.model.dto.response;
 
 import java.time.LocalDateTime;
 

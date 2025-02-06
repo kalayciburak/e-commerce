@@ -24,14 +24,14 @@ public class ExceptionLoggingAspect {
     @AfterReturning(value = "@annotation(org.springframework.web.bind.annotation.ExceptionHandler)", returning = "response")
     public void logAfterReturning(JoinPoint joinPoint, Object response) {
         var logMessage = createLogMessage(joinPoint);
-        log.error(String.format("%s => %s\n", logMessage, response));
+        log.error("{} => {}\n", logMessage, response);
         MDC.clear();
     }
 
     @AfterThrowing(pointcut = "@annotation(org.springframework.web.bind.annotation.ExceptionHandler)", throwing = "exception")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
         var logMessage = createLogMessage(joinPoint);
-        log.error(String.format("Error in %s\n", logMessage), exception);
+        log.error("Error in {}\n", logMessage, exception);
         MDC.clear();
     }
 
