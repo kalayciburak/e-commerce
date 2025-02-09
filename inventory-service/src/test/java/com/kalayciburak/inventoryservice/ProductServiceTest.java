@@ -6,27 +6,29 @@ import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.ProductRepository;
 import com.kalayciburak.inventoryservice.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.kalayciburak.commonpackage.core.constant.Messages.Inventory.Product.LISTED;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
-    @MockBean
+    @Mock
     private ProductMapper mapper;
 
-    @MockBean
+    @Mock
     private ProductRepository repository;
 
-    @Autowired
+    @InjectMocks
     private ProductService productService;
 
     @Test
@@ -43,7 +45,7 @@ public class ProductServiceTest {
         var response = productService.getAll();
 
         // Assert
-        Assertions.assertEquals(LISTED, response.getMessage());
+        assertEquals(LISTED, response.getMessage());
     }
 
     @Test
@@ -53,7 +55,7 @@ public class ProductServiceTest {
         when(repository.findById(nonExistentId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        Assertions.assertThrows(EntityNotFoundException.class, () -> productService.getById(nonExistentId));
+        assertThrows(EntityNotFoundException.class, () -> productService.getById(nonExistentId));
     }
 
     private ProductResponse createMockProductResponse() {
