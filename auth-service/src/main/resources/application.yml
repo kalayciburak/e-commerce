@@ -22,8 +22,22 @@ spring:
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:123456}
 
+graylog:
+  host: 127.0.0.1
+  port: 12201
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}
+    prefer-ip-address: true
+
 app:
   jwt:
     secret: ${SECRET_KEY}
     expiration-ms: ${EXPIRATION_TIME_MS:3600000} # 1 saat
-    refresh-expiration-ms: ${REFRESH_EXPIRATION_TIME_MS:86400000} # 1 gün
+    refresh-expiration-ms: ${REFRESH_EXPIRATION_TIME_MS:86400000} # 1 gï¿½n
