@@ -36,7 +36,7 @@ public class JPAExceptionHandler extends BaseExceptionHandler {
     }
 
     /**
-     * {@code EntityNotFoundException} istisnasını yakalar ve bu türdeki hataları işler.
+     * JPA {@code EntityNotFoundException} istisnasını yakalar ve bu türdeki hataları işler.
      * <p>
      * Bu istisna, istenen bir veri kaynağı veya varlık bulunamadığında fırlatılır. Hata mesajı, kullanıcıya aranan verinin
      * mevcut olmadığını açıklar.

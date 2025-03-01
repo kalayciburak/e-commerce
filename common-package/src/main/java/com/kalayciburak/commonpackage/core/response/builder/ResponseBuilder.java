@@ -20,6 +20,10 @@ public class ResponseBuilder {
         return new SuccessResponse<>(code, message, size, data);
     }
 
+    public static <T> SuccessResponse<T> createSuccessResponse(String message) {
+        return createSuccessResponse(null, message);
+    }
+
     public static <T> SuccessResponse<T> createSuccessResponse(String code, T data, String message) {
         int size = getSize(data);
 

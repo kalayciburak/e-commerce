@@ -1,5 +1,5 @@
 package com.kalayciburak.commonpackage.core.constant;
 
-public class Paths {
+public final class Paths {
     public static final String ConfigurationBasePackage = "com.kalayciburak";
 }

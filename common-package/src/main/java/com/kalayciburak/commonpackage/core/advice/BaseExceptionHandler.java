@@ -100,7 +100,7 @@ public class BaseExceptionHandler {
     }
 
     /**
-     * {@code EntityNotFoundException} türündeki istisnalar için özel bir işleyici tanımlar.
+     * Custom {@code EntityNotFoundException} türündeki istisnalar için özel bir işleyici tanımlar.
      * <p>
      * Bu tür istisnalar, bir varlığın bulunamadığında ortaya çıkar.
      *
