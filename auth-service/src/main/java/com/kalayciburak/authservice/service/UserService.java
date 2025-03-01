@@ -9,6 +9,7 @@ import com.kalayciburak.authservice.model.dto.request.RegisterRequest;
 import com.kalayciburak.authservice.model.dto.response.UserResponse;
 import com.kalayciburak.authservice.model.entity.User;
 import com.kalayciburak.authservice.repository.UserRepository;
+import com.kalayciburak.authservice.security.audit.SecurityAuditorProvider;
 import com.kalayciburak.authservice.service.helper.UserHelper;
 import com.kalayciburak.authservice.service.validator.UserValidator;
 import com.kalayciburak.commonpackage.core.response.success.SuccessResponse;
@@ -32,6 +33,7 @@ public class UserService {
     private final UserValidator validator;
     private final RoleService roleService;
     private final UserRepository repository;
+    private final SecurityAuditorProvider auditorProvider;
 
     /**
      * Tüm kullanıcıları getirir.
@@ -179,7 +181,7 @@ public class UserService {
     public void deleteUser(Long id) {
         var user = findUserById(id);
         if (hasAdminRole(user)) throw new AdminCannotBeDeletedException();
-        repository.deleteById(id);
+        repository.softDeleteById(auditorProvider.getCurrentAuditor(), id);
     }
 
     /**

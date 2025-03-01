@@ -44,6 +44,7 @@ public class SecurityConfig {
                     exception.authenticationEntryPoint(authenticationEntryPoint);
                     exception.accessDeniedHandler(accessDeniedHandler);
                 })
+                .anonymous(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 
