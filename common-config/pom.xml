@@ -21,6 +21,7 @@
         <module>../discovery-server</module>
         <module>../inventory-service</module>
         <module>../filter-service</module>
+        <module>../auth-service</module>
     </modules>
     <properties>
         <java.version>21</java.version>

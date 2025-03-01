@@ -4,23 +4,44 @@ services:
     image: mysql
     container_name: inventory_db
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3301:3306"
     volumes:
       - inventorydb:/data/db
 
   filterdb:
-    container_name: filter_db
     image: mongo:5.0.13
+    container_name: filter_db
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE=filterdb
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: filterdb
     volumes:
       - filterdb:/data/db
+
+  authdb:
+    image: mysql
+    container_name: auth_ecommerce_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3305:3306"
+    volumes:
+      - authdb:/data/db
+
+  blackliststore:
+    image: redis
+    container_name: blacklist_store
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: [ "redis-server", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - blacklist:/data
 
   # ? Graylog Configuration
   mongo:
@@ -45,10 +66,10 @@ services:
   graylog:
     image: graylog/graylog:6.0.4
     environment:
-      - GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
-      - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
-      - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
+      GRAYLOG_ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      GRAYLOG_HTTP_EXTERNAL_URI: http://127.0.0.1:9000/
+      GRAYLOG_PASSWORD_SECRET: ${GRAYLOG_PASSWORD_SECRET}
+      GRAYLOG_ROOT_PASSWORD_SHA2: ${GRAYLOG_ROOT_PASSWORD_SHA2}
     networks:
       - graylog
     depends_on:
@@ -60,8 +81,8 @@ services:
 
   # ? Kafka Configuration
   kafka:
-    container_name: kafka_broker
     image: bitnami/kafka:latest
+    container_name: kafka_broker
     ports:
       - "9092:9092"
     volumes:
@@ -81,6 +102,10 @@ volumes:
   inventorydb:
     driver: local
   filterdb:
+    driver: local
+  authdb:
+    driver: local
+  blacklist:
     driver: local
   kafka_data:
     driver: local

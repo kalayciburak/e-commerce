@@ -2,8 +2,8 @@ spring:
   application:
     name: inventory-service
   datasource:
-    username: root
-    password: 12345
+    username: ${MYSQL_ROOT_USERNAME:root}
+    password: ${MYSQL_ROOT_PASSWORD:123456}
     url: jdbc:mysql://localhost:3301/inventory_db?createDatabaseIfNotExist=true
   jpa:
     hibernate:
