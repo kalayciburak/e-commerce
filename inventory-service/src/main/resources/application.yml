@@ -33,3 +33,13 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${instanceId:${random.value}}
     prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true

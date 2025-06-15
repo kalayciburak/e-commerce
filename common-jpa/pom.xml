@@ -11,14 +11,26 @@
     <artifactId>common-jpa</artifactId>
     <name>common-jpa</name>
     <description>common-jpa</description>
+    <properties>
+        <micrometer.version>1.15.0</micrometer.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.kalayciburak</groupId>
             <artifactId>common-package</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
         </dependency>
     </dependencies>
 </project>
