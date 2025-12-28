@@ -19,7 +19,6 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryMapper mapper;
@@ -69,6 +68,7 @@ public class CategoryService {
         return createSuccessResponse(response, PARENT_CATEGORIES_INFO);
     }
 
+    @Transactional
     public Response save(CategoryRequest request) {
         checkCategoryUniqueness(request.name());
         var category = mapper.toEntity(request);
@@ -79,6 +79,7 @@ public class CategoryService {
         return createSuccessResponse(response, SAVED);
     }
 
+    @Transactional
     public Response update(Long id, CategoryRequest request) {
         var category = findCategoryByIdOrThrow(id);
         updateParentCategory(request, category);
@@ -89,9 +90,13 @@ public class CategoryService {
         return createSuccessResponse(response, UPDATED);
     }
 
+    @Transactional
     public void delete(Long id) {
-        findCategoryByIdOrThrow(id);
-        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+        repository.softDeleteByIdOrThrow(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+    }
+
+    protected Category findCategoryByIdOrThrow(Long id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 
     private void assignParentCategory(CategoryRequest request, Category category) {
@@ -114,9 +119,5 @@ public class CategoryService {
 
     private void checkCategoryUniqueness(String name) {
         if (repository.existsByName(name)) throw new EntityExistsException(EXISTS);
-    }
-
-    protected Category findCategoryByIdOrThrow(Long id) {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 }

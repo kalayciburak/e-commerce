@@ -1,9 +1,8 @@
 spring:
   application:
     name: filter-service
-  data:
-    mongodb:
-      uri: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@127.0.0.1:27017/filterdb?authSource=admin
+  mongodb:
+    uri: mongodb://${MONGO_ROOT_USERNAME:tbyte}:${MONGO_ROOT_PASSWORD:123456}@127.0.0.1:27017/filterdb?authSource=admin
   kafka:
     consumer:
       group-id: filter-service

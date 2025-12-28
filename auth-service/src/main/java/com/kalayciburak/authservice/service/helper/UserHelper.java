@@ -35,7 +35,7 @@ public class UserHelper {
      * @return Kullanıcı ADMIN ise true, değilse false
      */
     public static boolean hasAdminRole(User user) {
-        return user.getRoles().stream().anyMatch(role -> role.getName().equals(RoleType.ROLE_ADMIN));
+        return user.getRoles().stream().anyMatch(role -> role.getName().equals(RoleType.ROLE_SUPER_ADMIN));
     }
 
     /**

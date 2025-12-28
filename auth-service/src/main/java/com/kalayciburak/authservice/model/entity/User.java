@@ -3,6 +3,7 @@ package com.kalayciburak.authservice.model.entity;
 import com.kalayciburak.commonjpa.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLRestriction("is_active=true")
 @Table(name = "users")
 public class User extends BaseEntity {
     @Column(unique = true, nullable = false)

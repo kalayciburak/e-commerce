@@ -20,7 +20,6 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductMapper mapper;
@@ -55,6 +54,7 @@ public class ProductService {
         return createSuccessResponse(response, FOUND);
     }
 
+    @Transactional
     public Response save(ProductRequest request) {
         var product = mapper.toEntity(request);
         assignCategoryToProduct(request, product);
@@ -65,6 +65,7 @@ public class ProductService {
         return createSuccessResponse(response, SAVED);
     }
 
+    @Transactional
     public Response update(Long id, ProductRequest request) {
         var product = findProductByIdOrThrow(id);
         assignCategoryToProduct(request, product);
@@ -75,9 +76,13 @@ public class ProductService {
         return createSuccessResponse(response, UPDATED);
     }
 
+    @Transactional
     public void delete(Long id) {
-        findProductByIdOrThrow(id);
-        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+        repository.softDeleteByIdOrThrow(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+    }
+
+    protected Product findProductByIdOrThrow(Long id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 
     private void assignCategoryToProduct(ProductRequest request, Product product) {
@@ -93,9 +98,5 @@ public class ProductService {
     private void produceProductCreatedEvent(ProductSimpleResponse response) {
         var event = mapper.toProductCreatedEvent(response);
         producer.sendProductCreatedEvent(event);
-    }
-
-    protected Product findProductByIdOrThrow(Long id) {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND));
     }
 }

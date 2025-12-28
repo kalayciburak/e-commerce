@@ -1,4 +1,3 @@
-version: '3'
 services:
   inventorydb:
     image: mysql
@@ -81,22 +80,40 @@ services:
 
   # ? Kafka Configuration
   kafka:
-    image: bitnami/kafka:latest
+    image: apache/kafka:4.1.1
     container_name: kafka_broker
+    hostname: kafka
     ports:
       - "9092:9092"
     volumes:
-      - "kafka_data:/bitnami"
+      - kafka_data:/var/lib/kafka/data
     environment:
-      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
-      - KAFKA_CFG_PROCESS_ROLES=broker,controller
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
-      - KAFKA_CFG_NODE_ID=1
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
-      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      # Single node / local dev için gerekli olanlar
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_NODE_ID: "1"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"
+
+      # Listener'lar: container içi (29092), controller (29093), host dışarı açılan (9092)
+      KAFKA_LISTENERS: "PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+
+      # Bitnami'deki AUTO_CREATE_TOPICS_ENABLE karşılığı
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+      # Single broker olduğun için replication/min.isr değerleri (yoksa topic create ederken patlayabiliyor)
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+
+      # KRaft storage için cluster id (sabit de verebilirsin, local için sorun değil)
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+
+      # Data path (volume'a denk gelecek şekilde)
+      KAFKA_LOG_DIRS: "/var/lib/kafka/data"
 
   prometheus:
     image: prom/prometheus

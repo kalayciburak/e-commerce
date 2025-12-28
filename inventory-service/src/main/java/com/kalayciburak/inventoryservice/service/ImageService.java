@@ -17,7 +17,6 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ImageService {
     private final ImageMapper mapper;
@@ -42,6 +41,7 @@ public class ImageService {
         return createSuccessResponse(response, FOUND);
     }
 
+    @Transactional
     public Response save(ImageRequest request) {
         var image = mapper.toEntity(request);
         assignProductToImage(request, image);
@@ -51,6 +51,7 @@ public class ImageService {
         return createSuccessResponse(response, SAVED);
     }
 
+    @Transactional
     public Response update(Long id, ImageRequest request) {
         var image = findImageByIdOrThrow(id);
         assignProductToImage(request, image);
@@ -61,9 +62,9 @@ public class ImageService {
         return createSuccessResponse(response, UPDATED);
     }
 
+    @Transactional
     public void delete(Long id) {
-        findImageByIdOrThrow(id);
-        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+        repository.softDeleteByIdOrThrow(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignProductToImage(ImageRequest request, Image image) {

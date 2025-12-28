@@ -17,7 +17,6 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewMapper mapper;
@@ -42,6 +41,7 @@ public class ReviewService {
         return createSuccessResponse(response, FOUND);
     }
 
+    @Transactional
     public Response save(ReviewRequest request) {
         var review = mapper.toEntity(request);
         assignProductToReview(request, review);
@@ -51,6 +51,7 @@ public class ReviewService {
         return createSuccessResponse(response, SAVED);
     }
 
+    @Transactional
     public Response update(Long id, ReviewRequest request) {
         var review = findReviewByIdOrThrow(id);
         assignProductToReview(request, review);
@@ -61,9 +62,9 @@ public class ReviewService {
         return createSuccessResponse(response, UPDATED);
     }
 
+    @Transactional
     public void delete(Long id) {
-        findReviewByIdOrThrow(id);
-        repository.softDeleteById(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
+        repository.softDeleteByIdOrThrow(auditorAware.getCurrentAuditor().orElse(ANONYMOUS), id);
     }
 
     private void assignProductToReview(ReviewRequest request, Review review) {

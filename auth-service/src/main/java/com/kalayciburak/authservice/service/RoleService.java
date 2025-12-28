@@ -5,10 +5,7 @@ import com.kalayciburak.authservice.advice.exception.RoleNotFoundException;
 import com.kalayciburak.authservice.model.entity.Role;
 import com.kalayciburak.authservice.model.enums.RoleType;
 import com.kalayciburak.authservice.repository.RoleRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,22 +17,16 @@ import java.util.stream.Collectors;
 import static com.kalayciburak.authservice.model.enums.RoleType.ROLE_USER;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class RoleService {
-    private static final Logger log = LoggerFactory.getLogger(RoleService.class);
     private final RoleRepository repository;
 
     /**
      * Uygulama başladığında sistemde herhangi bir rol yoksa, varsayılan rollerin eklenmesini sağlar.
      */
-    @PostConstruct
-    protected void seedRoles() {
-        if (repository.count() == 0) {
-            var roles = Arrays.stream(RoleType.values()).map(Role::new).toList();
-            repository.saveAll(roles);
-            log.info("Roller başarıyla eklendi.");
-        }
+    @Transactional
+    public void seedRolesIfEmpty() {
+        if (repository.count() == 0) repository.saveAll(Arrays.stream(RoleType.values()).map(Role::new).toList());
     }
 
     /**
@@ -47,6 +38,7 @@ public class RoleService {
      * @return Bulunan rollerin kümesi
      * @throws InvalidRoleIdsException Eğer herhangi bir rol bulunamazsa
      */
+    @Transactional(readOnly = true)
     protected Set<Role> findRolesByIds(Set<Long> roleIds) {
         var roles = fetchRolesByIds(roleIds);
         validateRoleExistence(roles, roleIds);
@@ -61,6 +53,7 @@ public class RoleService {
      *
      * @return Kullanıcı rollerini içeren Set<Role>.
      */
+    @Transactional(readOnly = true)
     protected Set<Role> assignDefaultRoles() {
         return Set.of(repository.findByName(ROLE_USER).orElseThrow(() -> new RoleNotFoundException(ROLE_USER)));
     }

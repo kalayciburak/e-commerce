@@ -12,7 +12,6 @@
     <name>common-jpa</name>
     <description>common-jpa</description>
     <properties>
-        <micrometer.version>1.15.0</micrometer.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,7 +29,6 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>${micrometer.version}</version>
         </dependency>
     </dependencies>
 </project>

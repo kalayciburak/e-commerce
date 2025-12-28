@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.0</version>
+        <version>4.0.1</version>
         <relativePath/>
     </parent>
     <groupId>com.kalayciburak</groupId>
@@ -25,11 +25,11 @@
     </modules>
     <properties>
         <java.version>21</java.version>
-        <lombok.version>1.18.34</lombok.version>
-        <springdoc.version>2.7.0</springdoc.version>
-        <logback-gelf.version>5.0.1</logback-gelf.version>
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <lombok.version>1.18.42</lombok.version>
+        <springdoc.version>3.0.0</springdoc.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <logback-gelf.version>6.0.2</logback-gelf.version>
+        <spring-cloud.version>2025.1.0</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -75,8 +75,8 @@
             <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

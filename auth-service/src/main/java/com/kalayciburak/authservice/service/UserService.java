@@ -26,7 +26,6 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuilder.createSuccessResponse;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserService {
     private final UserHelper helper;
@@ -78,6 +77,7 @@ public class UserService {
      * @param request Kullanıcı bilgileri
      * @return Kaydedilen kullanıcı bilgileri
      */
+    @Transactional
     public SuccessResponse<UserResponse> registerUser(RegisterRequest request) {
         validator.validateUniqueUsername(request.username());
         validator.validatePasswordDataBreachStatus(request.password());
@@ -105,10 +105,11 @@ public class UserService {
      * @return Güncellenmiş kullanıcı bilgileri
      * @throws InvalidRoleIdsException Eğer herhangi bir rol ID'si geçersizse
      */
+    @Transactional
     public SuccessResponse<UserResponse> updateUserRoles(Long id, Set<Long> roleIds) {
-        var user = findUserById(id);
+        var user = repository.findActiveByIdForUpdate(id).orElseThrow(UserNotFoundException::new);
         var newRoles = roleService.findRolesByIds(roleIds);
-        if (user.getRoles().equals(newRoles)) createSuccessResponse(ROLES_NOT_CHANGED);
+        if (user.getRoles().equals(newRoles)) return createSuccessResponse(ROLES_NOT_CHANGED);
 
         user.setRoles(newRoles);
         var updatedUser = repository.save(user);
@@ -130,6 +131,7 @@ public class UserService {
      * @param request Parola güncelleme isteği
      * @return Güncellenmiş kullanıcı bilgileri
      */
+    @Transactional
     public SuccessResponse<UserResponse> updatePassword(Long id, PasswordRequest request) {
         validator.validatePasswordDataBreachStatus(request.password());
         var user = findUserById(id);
@@ -154,6 +156,7 @@ public class UserService {
      * @param request Parola değiştirme isteği
      * @return Güncellenmiş kullanıcı bilgileri
      */
+    @Transactional
     public SuccessResponse<UserResponse> changePassword(Long id, ChangePasswordRequest request) {
         var user = findUserById(id);
         validator.validateOldPassword(request, user);
@@ -178,10 +181,11 @@ public class UserService {
      * @param id Silinecek kullanıcının ID'si
      * @throws AdminCannotBeDeletedException Eğer kullanıcı ADMIN ise
      */
+    @Transactional
     public void deleteUser(Long id) {
-        var user = findUserById(id);
+        var user = repository.findActiveByIdForUpdate(id).orElseThrow(UserNotFoundException::new);
         if (hasAdminRole(user)) throw new AdminCannotBeDeletedException();
-        repository.softDeleteById(auditorProvider.getCurrentAuditor(), id);
+        repository.softDeleteByIdOrThrow(auditorProvider.getCurrentAuditor(), id);
     }
 
     /**
