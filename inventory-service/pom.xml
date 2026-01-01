@@ -25,5 +25,10 @@
             <groupId>com.kalayciburak</groupId>
             <artifactId>common-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>3.5.6</version>
+        </dependency>
     </dependencies>
 </project>

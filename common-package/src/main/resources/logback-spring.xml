@@ -3,10 +3,27 @@
     <springProperty scope="context" name="graylogHost" source="graylog.host"/>
     <springProperty scope="context" name="graylogPort" source="graylog.port"/>
 
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_FILE" value="${LOG_PATH}/${springAppName}.log"/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%yellow(%date) %highlight(%-5level) %green([%thread]) %magenta(%logger{15}) - %msg %n</pattern>
         </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${springAppName}.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
     </appender>
 
     <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
@@ -37,6 +54,7 @@
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
 
     <logger name="com.kalayciburak.commonpackage.aspect.logging.ExceptionLoggingAspect" level="ERROR">

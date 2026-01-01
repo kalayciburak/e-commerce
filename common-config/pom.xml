@@ -24,7 +24,7 @@
         <module>../auth-service</module>
     </modules>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <lombok.version>1.18.42</lombok.version>
         <springdoc.version>3.0.0</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>

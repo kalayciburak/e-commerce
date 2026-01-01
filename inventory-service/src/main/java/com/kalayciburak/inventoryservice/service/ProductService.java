@@ -11,6 +11,8 @@ import com.kalayciburak.inventoryservice.model.entitiy.Product;
 import com.kalayciburak.inventoryservice.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ import static com.kalayciburak.commonpackage.core.response.builder.ResponseBuild
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
     private final ProductMapper mapper;
     private final ProductProducer producer;
     private final ProductRepository repository;
@@ -33,6 +36,7 @@ public class ProductService {
         var products = repository.findAll();
         if (products.isEmpty()) return createNotFoundResponse(NOT_FOUND);
         var response = products.stream().map(mapper::toResponse).toList();
+        log.info("Retrieved {} products from the database.", response.size());
 
         return createSuccessResponse(response, LISTED);
     }

@@ -24,3 +24,42 @@ server:
 graylog:
   host: 127.0.0.1
   port: 12201
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}
+    prefer-ip-address: true
+    health-check-url-path: /api/actuator/health
+    status-page-url-path: /api/actuator/info
+    metadata-map:
+      management.context-path: /api/actuator
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers,logfile
+  endpoint:
+    health:
+      show-details: when_authorized
+    env:
+      enabled: false
+    configprops:
+      enabled: false
+    heapdump:
+      enabled: false
+    shutdown:
+      enabled: false
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  file:
+    name: logs/${spring.application.name}.log

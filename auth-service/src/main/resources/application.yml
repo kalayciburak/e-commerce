@@ -36,6 +36,31 @@ eureka:
     instance-id: ${spring.application.name}:${instanceId:${random.value}}
     prefer-ip-address: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers,logfile
+  endpoint:
+    health:
+      show-details: when_authorized
+    env:
+      enabled: false
+    configprops:
+      enabled: false
+    heapdump:
+      enabled: false
+    shutdown:
+      enabled: false
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  file:
+    name: logs/${spring.application.name}.log
+
 app:
   jwt:
     secret: ${SECRET_KEY}

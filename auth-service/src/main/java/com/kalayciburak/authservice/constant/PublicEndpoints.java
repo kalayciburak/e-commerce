@@ -2,6 +2,7 @@ package com.kalayciburak.authservice.constant;
 
 public final class PublicEndpoints {
     public static final String[] ENDPOINTS = {
+            "/actuator/**",
             "/public/**",
             "/v2/api-docs",
             "/swagger-ui.html",
